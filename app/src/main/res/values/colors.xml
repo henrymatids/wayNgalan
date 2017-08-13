@@ -7,4 +7,7 @@
     <color name="textColor">#FFFFFF</color>
     <color name="underlineColor">#FFFFFF</color>
     <color name="buttonColor">#009999</color>
+    <color name="colorPrimaryLight">#EDE7F6</color>
+    <!--<color name="colorAccent">#7C4DFF</color>-->
+    <color name="colorSecondary">#FFC107</color>
 </resources>

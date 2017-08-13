@@ -3,8 +3,8 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="promptUsername">Username</string>
-    <string name="prompt_password">Password</string>
+    <string name="promptUsername"> Username</string>
+    <string name="prompt_password"> Password</string>
     <string name="action_sign_in">LOGIN</string>
     <string name="action_notification">NOTIFICATION</string>
     <string name="action_accounts">ACCOUNTS</string>
@@ -12,13 +12,25 @@
     <string name="action_view_user">VIEW USERS</string>
     <string name="action_add_new_user">ADD NEW USER</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_add">ADD</string>
+    <string name="action_logout">LOG OUT</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_weak_password">This password is weak</string>
+    <string name="error_user_exists">Username already exist!</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_username_or_password">Username or Password is incorrect</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-
     <string name="test_string">NEW ACTIVITY</string>
+    <string name="title_activity_add_new_user">activity_add_new_user</string>
+    <string name="loading">Loading...</string>
+
+    <string name="choose_account_type">Choose Account Type</string>
+    <string-array name="account_type">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
 </resources>

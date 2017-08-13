@@ -6,19 +6,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Arrays;
+
 public class LandingPage extends AppCompatActivity{
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
+        //Firebase instance
+        mAuth = FirebaseAuth.getInstance();
+
         Button mAccountButton = (Button) findViewById(R.id.accounts_button);
         mAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AccountsActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(v.getContext(), AccountsActivity.class));
 
             }
         });
@@ -27,8 +35,7 @@ public class LandingPage extends AppCompatActivity{
         mNotificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), NotificationActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(v.getContext(), NotificationActivity.class));
             }
         });
 
@@ -36,8 +43,16 @@ public class LandingPage extends AppCompatActivity{
         mLogsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LogsActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(v.getContext(), LogsActivity.class));
+            }
+        });
+
+        Button mLogOutButton = (Button) findViewById(R.id.logout_button);
+        mLogOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                startActivity(new Intent(view.getContext(), LoginActivity.class));
             }
         });
     }

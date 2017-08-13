@@ -32,7 +32,6 @@
                 android:layout_marginTop="@dimen/button_marginTop"
                 android:background="@color/buttonColor"
                 android:text="@string/action_view_user"
-                android:textColor="@color/textColor"
                 android:textSize="@dimen/font_size" />
 
             <Button
@@ -42,7 +41,6 @@
                 android:layout_marginTop="@dimen/button_marginTop"
                 android:background="@color/buttonColor"
                 android:text="@string/action_add_new_user"
-                android:textColor="@color/textColor"
                 android:textSize="@dimen/font_size" />
 
         </LinearLayout>
