@@ -1,85 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bodyBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.henrymatidios.wayngalan.AddNewUserActivity">
 
-    <ScrollView
-        android:id="@+id/AddNewUser_page"
+    <LinearLayout
+        android:id="@+id/AddNewUser_page_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <LinearLayout
-            android:id="@+id/AddNewUser_page_form"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/add_new_user_editText_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/button_marginTop"
+                android:backgroundTint="@color/underlineColor"
+                android:hint="@string/promptUsername"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:textColor="@color/textColor"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/add_new_user_editText_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/button_marginTop"
+                android:backgroundTint="@color/underlineColor"
+                android:hint="@string/prompt_password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/account_type"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/account_type"
+            android:prompt="@string/choose_account_type"
+            android:layout_marginTop="@dimen/button_marginTop"
+            android:textColor="@color/textColor"/>
+
+        <Button
+            android:id="@+id/add_new_user_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/loginPageTopMargin"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_marginTop="@dimen/button_marginTop"
+            android:background="@color/buttonColor"
+            android:text="@string/action_add"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/font_size" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/add_new_user_editText_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/button_marginTop"
-                    android:backgroundTint="@color/underlineColor"
-                    android:hint="@string/promptUsername"
-                    android:inputType="textNoSuggestions"
-                    android:maxLines="1"
-                    android:textColor="@color/textColor"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/add_new_user_editText_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/button_marginTop"
-                    android:backgroundTint="@color/underlineColor"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/account_type"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:entries="@array/account_type"
-                android:prompt="@string/choose_account_type"
-                android:layout_marginTop="@dimen/button_marginTop"
-                android:textColor="@color/textColor"/>
-
-            <Button
-                android:id="@+id/add_new_user_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/button_marginTop"
-                android:background="@color/buttonColor"
-                android:text="@string/action_add"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/font_size" />
-
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

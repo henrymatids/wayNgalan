@@ -1,8 +1,8 @@
 package com.example.henrymatidios.wayngalan;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,7 +30,12 @@ public class AccountsActivity extends AppCompatActivity {
         mViewUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                String uid;
+//                if(user != null){
+//                    uid = user.getUid();
+//                    Toast.makeText(AccountsActivity.this, uid,Toast.LENGTH_LONG).show();
+//                }
             }
         });
 
@@ -40,6 +45,14 @@ public class AccountsActivity extends AppCompatActivity {
                 startActivity(new Intent(v.getContext(),AddNewUserActivity.class));
             }
         });
+    }
+
+    public void authenticateAccount() {
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        dbRef.child("Users").child(task.getResult().getUser().getUid()).setValue(mapType);
+    }
+
+    public void getAccountType(){
 
     }
 }

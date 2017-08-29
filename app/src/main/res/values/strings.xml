@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Henry Gwapo</string>
+    <string name="app_name">Thesis</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -27,6 +27,7 @@
     <string name="test_string">NEW ACTIVITY</string>
     <string name="title_activity_add_new_user">activity_add_new_user</string>
     <string name="loading">Loading...</string>
+    <string name="alert_gas_leak">Gas Leak</string>
 
     <string name="choose_account_type">Choose Account Type</string>
     <string-array name="account_type">

@@ -7,13 +7,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,8 +30,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private Button mSignInButton;
-//    private View mProgressView;
-//    private View mLoginFormView;
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -48,8 +44,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mAuth = FirebaseAuth.getInstance();
 
         // Set up the login form.
-//        mLoginFormView = findViewById(R.id.login_form);
-//        mProgressView = findViewById(R.id.log_page);
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
@@ -64,11 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-
-                    return true;
-                }
-                return false;
+                return id == R.id.login || id == EditorInfo.IME_NULL;
             }
         });
 
@@ -161,7 +151,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 mPasswordView.setError(getString(R.string.error_username_or_password));
                             } catch (Exception e) {
                                 Log.e("createAccount Error:", e.getMessage());
-                                Toast.makeText(LoginActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
                             }
 
                             updateUI(null);
