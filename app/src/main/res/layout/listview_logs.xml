@@ -31,16 +31,20 @@
                 android:id="@+id/alert_editText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="none"
                 android:focusable="false"
                 android:background="@null"
+                android:textColor="@color/textColor"
                 android:textSize="20sp"/>
 
             <EditText
                 android:id="@+id/location_editText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:inputType="none"
                 android:background="@null"
                 android:focusable="false"
+                android:textColor="@color/textColor"
                 android:textSize="15sp"/>
         </LinearLayout>
 
@@ -54,17 +58,21 @@
             android:id="@+id/date_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="date"
             android:background="@null"
             android:focusable="false"
+            android:textColor="@color/textColor"
             android:layout_gravity="end"/>
 
         <EditText
             android:id="@+id/time_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="time"
             android:background="@null"
             android:focusable="false"
             android:textSize="15sp"
+            android:textColor="@color/textColor"
             android:gravity="end"/>
     </LinearLayout>
 

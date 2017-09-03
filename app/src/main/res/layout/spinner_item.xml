@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:ellipsize="marquee"
     android:layout_weight="0.06"
-    android:textColor="@color/colorBlack"
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
     android:paddingTop="10dp"

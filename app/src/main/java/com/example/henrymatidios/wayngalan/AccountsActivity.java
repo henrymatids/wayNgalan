@@ -20,22 +20,13 @@ public class AccountsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounts);
 
-        //Instantiation of Firebase Variables;
-//        db = FirebaseDatabase.getInstance();
-//        myRef = db.getInstance().getReference("Users");
-
         Button mViewUsers = (Button) findViewById(R.id.view_user_button);
         Button mAddNewUser = (Button) findViewById(R.id.add_new_user_button);
 
         mViewUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                String uid;
-//                if(user != null){
-//                    uid = user.getUid();
-//                    Toast.makeText(AccountsActivity.this, uid,Toast.LENGTH_LONG).show();
-//                }
+                startActivity(new Intent(v.getContext(), ViewUsersActivity.class));
             }
         });
 
@@ -48,8 +39,6 @@ public class AccountsActivity extends AppCompatActivity {
     }
 
     public void authenticateAccount() {
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        dbRef.child("Users").child(task.getResult().getUser().getUid()).setValue(mapType);
     }
 
     public void getAccountType(){

@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/button_marginTop"
         android:background="@color/buttonColor"
-        android:textColor="@color/textColor"
         android:text="@string/action_view_user"
         android:textSize="@dimen/font_size" />
 
@@ -26,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/button_marginTop"
         android:background="@color/buttonColor"
-        android:textColor="@color/textColor"
         android:text="@string/action_add_new_user"
         android:textSize="@dimen/font_size" />
 

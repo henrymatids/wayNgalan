@@ -10,21 +10,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.henrymatidios.wayngalan.models.LogsInfo;
+import com.example.henrymatidios.wayngalan.models.User;
 
 import java.util.List;
 
 /**
- * Created by Henry Matidios on 15/08/2017.
+ * @author Henry Matidios
+ * @since 15/08/2017
  */
 
 public class CustomAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView mSpinnerItem;
-        ImageView mNotificationImage;
+        ImageView mImage;
         EditText mAlertEditText;
         EditText mLocationEditText;
         EditText mDateEditText;
         EditText mTimeEditText;
+        TextView mProfileName;
+        TextView mProfileType;
     }
     private Context context;
     private List<?> mData;
@@ -37,7 +41,7 @@ public class CustomAdapter extends BaseAdapter {
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    CustomAdapter(Context context, List<LogsInfo> mData, int image) {
+    CustomAdapter(Context context, List<?> mData, int image) {
         this.context = context;
         this.mData = mData;
         this.mImage = image;
@@ -63,13 +67,15 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
-        TextView spinnerItem;
         ImageView mImage;
         EditText mAlert;
-        EditText mLocation;
         EditText mDate;
+        EditText mLocation;
         EditText mTime;
+        TextView mProfileName;
+        TextView mProfileType;
+        TextView spinnerItem;
+        ViewHolder holder;
 
         holder = new ViewHolder();
 
@@ -83,13 +89,20 @@ public class CustomAdapter extends BaseAdapter {
 
             } else if (context instanceof LogsActivity) {
                 convertView = layoutInflater.inflate(R.layout.listview_logs, parent, false);
-                holder = new ViewHolder();
 
-                holder.mNotificationImage = (ImageView) convertView.findViewById(R.id.imageView);
+                holder.mImage = (ImageView) convertView.findViewById(R.id.imageView);
                 holder.mAlertEditText = (EditText) convertView.findViewById(R.id.alert_editText);
                 holder.mLocationEditText = (EditText) convertView.findViewById(R.id.location_editText);
                 holder.mDateEditText = (EditText) convertView.findViewById(R.id.date_editText);
                 holder.mTimeEditText = (EditText) convertView.findViewById(R.id.time_editText);
+
+                convertView.setTag(holder);
+            } else if (context instanceof ViewUsersActivity) {
+                convertView = layoutInflater.inflate(R.layout.listview_view_users, parent, false);
+
+                holder.mImage = (ImageView) convertView.findViewById(R.id.imageView_profile_picture);
+                holder.mProfileName = (TextView) convertView.findViewById(R.id.profile_name);
+                holder.mProfileType = (TextView) convertView.findViewById(R.id.profile_account_type);
 
                 convertView.setTag(holder);
             }
@@ -102,7 +115,7 @@ public class CustomAdapter extends BaseAdapter {
             spinnerItem.setText(mData.get(position).toString());
 
         } else if (context instanceof  LogsActivity) {
-            mImage = holder.mNotificationImage;
+            mImage = holder.mImage;
             mAlert = holder.mAlertEditText;
             mLocation = holder.mLocationEditText;
             mDate = holder.mDateEditText;
@@ -115,6 +128,16 @@ public class CustomAdapter extends BaseAdapter {
             mLocation.setText(logs.getLocation());
             mDate.setText(logs.getDate());
             mTime.setText(logs.getTime());
+        } else if (context instanceof ViewUsersActivity){
+            mImage = holder.mImage;
+            mProfileName = holder.mProfileName;
+            mProfileType = holder.mProfileType;
+
+            User mUser = (User) mData.get(position);
+
+            mImage.setImageResource(this.mImage);
+            mProfileName.setText(mUser.getName());
+            mProfileType.setText(mUser.getType());
         }
         return convertView;
     }

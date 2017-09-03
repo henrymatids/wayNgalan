@@ -1,16 +1,22 @@
 package com.example.henrymatidios.wayngalan;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LandingPage extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
+    private Intent myServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +55,33 @@ public class LandingPage extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
+                if (myServiceIntent != null) {
+                    stopService(myServiceIntent);
+                    Toast.makeText(LandingPage.this, "SERVICE STOPPED", Toast.LENGTH_SHORT).show();
+                }
                 startActivity(new Intent(view.getContext(), LoginActivity.class));
             }
         });
+
+        createService();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    public void createService() {
+        //Start notification service
+        ComponentName myServiceComponent = new ComponentName(getApplicationContext(), NotificationService.class);
+        myServiceIntent = new Intent(this, NotificationService.class);
+        startService(myServiceIntent);
+
+        //Schedule notification service
+        JobInfo.Builder mBuilder = new JobInfo.Builder(0, myServiceComponent);
+        mBuilder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+
+        JobScheduler mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        mJobScheduler.schedule(mBuilder.build());
     }
 }

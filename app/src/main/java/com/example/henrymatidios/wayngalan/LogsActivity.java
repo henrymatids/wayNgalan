@@ -1,10 +1,12 @@
 package com.example.henrymatidios.wayngalan;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.henrymatidios.wayngalan.models.Logs;
@@ -12,7 +14,6 @@ import com.example.henrymatidios.wayngalan.models.LogsInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ import java.util.Map;
 
 public class LogsActivity extends BaseActivity {
     //Firebase
-    FirebaseDatabase database;
     DatabaseReference dbRef;
 
+    CustomAdapter adapter;
     List<LogsInfo> mListLogs;
     ListView mListView;
     Map<String, Logs> mLogMap;
@@ -35,9 +36,6 @@ public class LogsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logs);
-
-        database = FirebaseDatabase.getInstance();
-        dbRef = database.getReference("Notification");
 
         mListView = (ListView) findViewById(R.id.logs_listView);
         mListLogs = new ArrayList<>();
@@ -50,7 +48,7 @@ public class LogsActivity extends BaseActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(LogsActivity.this,"Item no. "+position,Toast.LENGTH_LONG).show();
+                showMenu(view);
             }
         });
     }
@@ -68,6 +66,10 @@ public class LogsActivity extends BaseActivity {
 
     @SuppressWarnings("unchecked")
     public void getLogs() {
+
+        dbRef = Utils.getDatabase().getReference("Notification");
+        dbRef.keepSynced(true);
+
         mPbLinearLayout.setVisibility(View.VISIBLE);
         valueEventListener = dbRef.addValueEventListener(new ValueEventListener() {
 
@@ -76,20 +78,19 @@ public class LogsActivity extends BaseActivity {
                 mLogMap.clear();
                 mListLogs.clear();
 
-                if(mLogMap != null) {
-                    for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                        Map<String, String> mLogs = (Map<String, String>) childSnapshot.getValue();
+                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    Map<String, String> mLogs = (Map<String, String>) childSnapshot.getValue();
 
-                        if(mLogs != null)
-                        {
-                            LogsInfo mLogsInfo = new LogsInfo(mLogs.get("date"), mLogs.get("time"), mLogs.get("location"));
-                            mListLogs.add(mLogsInfo);
-                        }
+                    if(mLogs != null)
+                    {
+                        LogsInfo mLogsInfo = new LogsInfo(mLogs.get("date"), mLogs.get("time"), mLogs.get("location"));
+                        mListLogs.add(mLogsInfo);
                     }
 
-                    CustomAdapter adapter = new CustomAdapter(LogsActivity.this, mListLogs, R.mipmap.ic_redcircle);
-                    mListView.setAdapter(adapter);
+                adapter = new CustomAdapter(LogsActivity.this, mListLogs, R.mipmap.ic_redcircle);
+
                 }
+                mListView.setAdapter(adapter);
                 mPbLinearLayout.setVisibility(View.GONE);
             }
 
@@ -97,6 +98,30 @@ public class LogsActivity extends BaseActivity {
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(LogsActivity.this, "Database Error: " +databaseError.getCode() , Toast.LENGTH_SHORT).show();
                 System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    public void showMenu(View view){
+
+        PopupMenu popup = new PopupMenu(LogsActivity.this, view);
+
+        popup.getMenuInflater().inflate(R.menu.logs_popup_menu, popup.getMenu());
+        popup.show();
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action:
+                        Toast.makeText(getApplicationContext(), "Action Clicked", Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.ignore:
+                        Toast.makeText(getApplicationContext(), "Ignore Clicked", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
             }
         });
     }

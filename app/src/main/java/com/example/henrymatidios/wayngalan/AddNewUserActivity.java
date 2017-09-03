@@ -55,9 +55,7 @@ public class AddNewUserActivity extends BaseActivity implements View.OnClickList
 
         //Firebase instances
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
-        dbRef = db.getReference();
-
+        dbRef = Utils.getDatabase().getReference();
 
         accountTypes.add("Admin");
         accountTypes.add("User");
@@ -151,7 +149,6 @@ public class AddNewUserActivity extends BaseActivity implements View.OnClickList
                                 mUsername.requestFocus();
                             } catch(Exception e) {
                                 Log.e("createAccount Error:", e.getMessage());
-//                                Toast.makeText(AddNewUserActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
                             }
                             Toast.makeText(AddNewUserActivity.this, "Failed to add.",Toast.LENGTH_LONG).show();
                         }

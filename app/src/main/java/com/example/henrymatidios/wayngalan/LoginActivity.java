@@ -1,5 +1,6 @@
 package com.example.henrymatidios.wayngalan;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,11 +31,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     // UI references.
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
-    private Button mSignInButton;
 
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    ComponentName myServiceComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +65,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-        mSignInButton= (Button) findViewById(R.id.sign_in_button);
+        Button mSignInButton= (Button) findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(this);
 
         mUsernameView.setError(null);
         mPasswordView.setError(null);
+
     }
 
     @Override
@@ -134,7 +138,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("signIn method", "signInWithEmail:success");
+                            startService(new Intent(getApplication(), NotificationService.class));
+
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
@@ -154,6 +159,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             }
 
                             updateUI(null);
+                            Toast.makeText(getApplicationContext(),"Network connection failed!", Toast.LENGTH_LONG).show();
                         }
                         hideProgressDialog();
                     }
@@ -161,6 +167,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         );
     }
 
+    private void scheduleJob(){
+
+    }
     /**
      * Changes the UI
      * @param user current user status. Has a Null value if there are no user logged in.

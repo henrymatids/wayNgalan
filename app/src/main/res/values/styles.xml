@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHint">@color/textColor</item>
         <item name="android:colorBackground">@color/bodyBackground</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
