@@ -18,25 +18,57 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.facebook.com"
+                    android:path="/henry.matids" />
+            </intent-filter>
         </activity>
-        <activity android:name=".LandingPage" />
-        <activity android:name=".AccountsActivity" />
-        <activity android:name=".ViewUsersActivity" />
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".LogsActivity" />
-        <activity android:name=".AddNewUserActivity" />
+        <activity
+            android:name=".LandingPage"
+            android:screenOrientation="portrait"
+            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".AccountsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ViewUsersActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".NotificationActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".LogsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".AddNewUserActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
 
         <service
             android:name=".NotificationService"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

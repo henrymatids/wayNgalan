@@ -4,6 +4,7 @@
     <dimen name="loginPageTopMargin">150dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="font_size">25sp</dimen>
+    <dimen name="dialog_font_size">20sp</dimen>
     <dimen name="button_marginTop">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="drawable_padding">10dp</dimen>

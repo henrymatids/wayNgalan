@@ -1,6 +1,5 @@
 package com.example.henrymatidios.wayngalan;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,8 +35,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    ComponentName myServiceComponent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +43,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         //Firebase
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        updateUI(user);
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -178,6 +177,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if(user != null){
             //check the user credentials
             startActivity(new Intent(LoginActivity.this, LandingPage.class));
+            finish();
         }
     }
 

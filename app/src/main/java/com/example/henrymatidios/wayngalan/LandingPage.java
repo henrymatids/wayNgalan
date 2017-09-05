@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LandingPage extends AppCompatActivity{
 
@@ -59,7 +60,10 @@ public class LandingPage extends AppCompatActivity{
                     stopService(myServiceIntent);
                     Toast.makeText(LandingPage.this, "SERVICE STOPPED", Toast.LENGTH_SHORT).show();
                 }
-                startActivity(new Intent(view.getContext(), LoginActivity.class));
+                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -83,5 +87,12 @@ public class LandingPage extends AppCompatActivity{
 
         JobScheduler mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         mJobScheduler.schedule(mBuilder.build());
+    }
+
+    public void getUserCredentials() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user != null) {
+//            String userID = user.getUid();
+//        }
     }
 }

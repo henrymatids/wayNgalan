@@ -20,4 +20,9 @@
     <style name="spinnerDropDownStyle" parent = "android:Widget.Material.DropDownItem.Spinner">
         <item name="android:textColor">@color/textColor</item>
     </style>
+    <style name="progressDialogTheme" parent = "android:Theme.Material.Dialog">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:background">@color/textColor</item>
+        <item name="android:textSize">@dimen/dialog_font_size</item>
+    </style>
 </resources>

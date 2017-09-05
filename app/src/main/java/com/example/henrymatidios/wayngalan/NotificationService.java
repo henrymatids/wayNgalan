@@ -41,7 +41,6 @@ public class NotificationService extends JobService {
     @SuppressWarnings("unchecked")
     @Override
     public boolean onStartJob(JobParameters params) {
-        //Code to be executed when the service starts
 
         DatabaseReference dbRef = Utils.getDatabase().getReference("Notification");
         dbRef.keepSynced(true);
@@ -57,7 +56,6 @@ public class NotificationService extends JobService {
                     if (mData.get("isOpen").equals("false")) {
                         showNotification();
                     }
-
                 }
             }
 
@@ -80,8 +78,8 @@ public class NotificationService extends JobService {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
+
         return true;
     }
 
@@ -97,6 +95,13 @@ public class NotificationService extends JobService {
                 .setContentTitle("Gas Leak Alert!")
                 .setTicker("Gas Leak Alert!")
                 .setAutoCancel(true)
+//                .setStyle(new NotificationCompat.InboxStyle()
+//                        .addLine("console 1")
+//                        .addLine("console 5")
+//                        .setBigContentTitle("2 Gas Leak Alert/s")
+//                        .setSummaryText("Gas Leak!"))
+    //                .setGroup("Gas leak alert")             //newly added  05/09/17
+    //                .setGroupSummary(true)                  //newly added  05/09/17
                 .setContentText("Hello Notification!");
 
         Intent notificationIntent = new Intent(this, LogsActivity.class);

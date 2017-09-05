@@ -14,6 +14,7 @@
         android:gravity="start">
 
         <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:contentDescription="@string/logs_indicator"
             android:id="@+id/imageView"
             android:layout_width="23dp"
             android:layout_height="25dp"

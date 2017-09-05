@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -120,7 +119,7 @@ public class AddNewUserActivity extends BaseActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI
-                            Map<String, String> mapType = new HashMap<String, String>();
+                            Map<String, String> mapType = new HashMap<>();
                             mapType.put("type", type);
 
                             dbRef.child("Accounts").child(task.getResult().getUser().getUid()).setValue(mapType);
@@ -162,12 +161,12 @@ public class AddNewUserActivity extends BaseActivity implements View.OnClickList
      * Updates the UI
      * @param user Object of the current user
      */
-    public void updateUI(FirebaseUser user) {
-        hideProgressDialog();
-        if(user != null) {
-
-        } else {
-
-        }
-    }
+//    public void updateUI(FirebaseUser user) {
+//        hideProgressDialog();
+//        if(user != null) {
+//
+//        } else {
+//
+//        }
+//    }
 }

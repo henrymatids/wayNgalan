@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +20,6 @@ public class ViewUsersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_users);
 
         ListView mListView = (ListView) findViewById(R.id.view_users_listView);
-        LinearLayout mPBLayout = (LinearLayout) findViewById(R.id.progress_bar_view_users);
 
         List<User> mUserList = new ArrayList<>();
         User newUser = new User();

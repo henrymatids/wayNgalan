@@ -8,9 +8,8 @@
     android:orientation="vertical"
     tools:context="com.example.henrymatidios.wayngalan.NotificationActivity">
 
-    <ListView
-        android:id="@+id/notification_list"
+    <Switch
+        android:id="@+id/switch1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="match_parent" />
 </LinearLayout>
