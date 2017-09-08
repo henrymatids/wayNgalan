@@ -13,11 +13,19 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class LandingPage extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private Intent myServiceIntent;
+    private String accountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +34,21 @@ public class LandingPage extends AppCompatActivity{
 
         //Firebase instance
         mAuth = FirebaseAuth.getInstance();
+        getUserCredentials();
 
         Button mAccountButton = (Button) findViewById(R.id.accounts_button);
         mAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), AccountsActivity.class));
+                if(accountType.equals("0")){
+                    Intent intent = new Intent(v.getContext(), AccountsActivity.class);
+                    intent.putExtra("EXTRA_ACCOUNT_TYPE", accountType);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(v.getContext(), NotificationActivity.class);
+                    intent.putExtra("EXTRA_ACCOUNT_TYPE", accountType);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -58,7 +75,7 @@ public class LandingPage extends AppCompatActivity{
                 mAuth.signOut();
                 if (myServiceIntent != null) {
                     stopService(myServiceIntent);
-                    Toast.makeText(LandingPage.this, "SERVICE STOPPED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LandingPage.this, "Service Stopped", Toast.LENGTH_SHORT).show();
                 }
                 Intent intent = new Intent(view.getContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -89,10 +106,30 @@ public class LandingPage extends AppCompatActivity{
         mJobScheduler.schedule(mBuilder.build());
     }
 
+    @SuppressWarnings("unchecked")
     public void getUserCredentials() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if(user != null) {
-//            String userID = user.getUid();
-//        }
+
+        if(user != null) {
+            String userID = user.getUid();
+            DatabaseReference dbRef = Utils.getDatabase().getReference("Accounts");
+
+            dbRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    HashMap<String, ?> snapshotValue = (HashMap<String, ?>) dataSnapshot.getValue();
+
+                    if(snapshotValue != null){
+                        accountType = (String)snapshotValue.get("type");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
+
 }

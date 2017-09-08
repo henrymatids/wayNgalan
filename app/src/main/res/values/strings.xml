@@ -7,8 +7,8 @@
     <string name="prompt_password"> Password</string>
     <string name="action_sign_in">LOGIN</string>
     <string name="action_notification">NOTIFICATION</string>
-    <string name="action_accounts">ACCOUNTS</string>
-    <string name="action_logs">LOGS</string>
+    <string name="action_accounts">ACCOUNT</string>
+    <string name="action_logs">LOG</string>
     <string name="action_view_user">VIEW USERS</string>
     <string name="action_add_new_user">ADD NEW USER</string>
     <string name="action_sign_in_short">Sign in</string>

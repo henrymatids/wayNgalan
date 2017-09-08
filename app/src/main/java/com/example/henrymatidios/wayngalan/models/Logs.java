@@ -1,7 +1,8 @@
 package com.example.henrymatidios.wayngalan.models;
 
 /**
- * Created by Henry Matidios on 26/08/2017.
+ * @author Henry Matidios.
+ * @since 26/08/2017
  */
 
 public class Logs {
