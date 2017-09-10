@@ -1,5 +1,6 @@
 package com.example.henrymatidios.wayngalan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.henrymatidios.wayngalan.models.Logs;
 import com.example.henrymatidios.wayngalan.models.LogsInfo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +39,8 @@ public class LogsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logs);
+
+        processIntent(getIntent());
 
         mListView = (ListView) findViewById(R.id.logs_listView);
         mListLogs = new ArrayList<>();
@@ -64,6 +69,26 @@ public class LogsActivity extends BaseActivity {
         super.onResume();
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        processIntent(intent);
+    }
+
+    public void processIntent(Intent intent) {
+        try {
+            Bundle extras = intent.getExtras();
+            if(extras.getBoolean("EXTRA_NOTIFICATION_CLICKED")) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user == null) {
+                    startActivity(new Intent(LogsActivity.this, LoginActivity.class));
+                    Toast.makeText(this, "You need to sign in first.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch(Exception e) {
+            Toast.makeText(this, "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public void getLogs() {
 
@@ -83,13 +108,17 @@ public class LogsActivity extends BaseActivity {
 
                     if(mLogs != null)
                     {
-                        LogsInfo mLogsInfo = new LogsInfo(mLogs.get("date"), mLogs.get("time"), mLogs.get("location"));
+                        int image;
+                        if(mLogs.get("processed").equals("false")) {
+                            image = R.mipmap.ic_redcircle;
+                        } else {
+                            image = R.mipmap.ic_greencircle;
+                        }
+                        LogsInfo mLogsInfo = new LogsInfo(mLogs.get("date"), mLogs.get("time"), mLogs.get("location"), image);
                         mListLogs.add(mLogsInfo);
                     }
-
-                adapter = new CustomAdapter(LogsActivity.this, mListLogs, R.mipmap.ic_redcircle);
-
                 }
+                adapter = new CustomAdapter(LogsActivity.this, mListLogs, 0);
                 mListView.setAdapter(adapter);
                 mPbLinearLayout.setVisibility(View.GONE);
             }
@@ -125,4 +154,5 @@ public class LogsActivity extends BaseActivity {
             }
         });
     }
+
 }

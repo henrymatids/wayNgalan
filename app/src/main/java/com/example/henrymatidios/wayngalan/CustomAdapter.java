@@ -110,6 +110,7 @@ public class CustomAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        //POPULATE FIELDS
         if(context instanceof AddNewUserActivity) {
             spinnerItem = holder.mSpinnerItem;
             spinnerItem.setText(mData.get(position).toString());
@@ -123,7 +124,7 @@ public class CustomAdapter extends BaseAdapter {
 
             LogsInfo logs = (LogsInfo) mData.get(position);
 
-            mImage.setImageResource(this.mImage);
+            mImage.setImageResource(logs.getImage());
             mAlert.setText(context.getString(R.string.alert_gas_leak));
             mLocation.setText(logs.getLocation());
             mDate.setText(logs.getDate());

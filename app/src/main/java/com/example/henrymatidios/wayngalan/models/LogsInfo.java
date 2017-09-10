@@ -9,13 +9,15 @@ public class LogsInfo {
     private String date;
     private String location;
     private String time;
+    private int image;
 
     public LogsInfo(){}
 
-    public LogsInfo(String date, String time, String location) {
+    public LogsInfo(String date, String time, String location, int image) {
         this.date = date;
         this.time = time;
         this.location = location;
+        this.image = image;
     }
 
     public String getDate() {
@@ -40,5 +42,13 @@ public class LogsInfo {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }

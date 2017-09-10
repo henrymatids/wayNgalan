@@ -6,6 +6,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
@@ -14,9 +15,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import static android.app.Notification.DEFAULT_SOUND;
+
 public class NotificationService extends JobService {
+
+    private int unreadNotif;
+    private List<String> notifList;
 
     public NotificationService() {
     }
@@ -24,6 +32,7 @@ public class NotificationService extends JobService {
     @Override
     public void onCreate() {
         super.onCreate();
+        notifList = new ArrayList<>();
         Toast.makeText(this, "Service Created", Toast.LENGTH_SHORT).show();
     }
 
@@ -41,6 +50,8 @@ public class NotificationService extends JobService {
     @SuppressWarnings("unchecked")
     @Override
     public boolean onStartJob(JobParameters params) {
+        unreadNotif = 0;
+        notifList.clear();
 
         DatabaseReference dbRef = Utils.getDatabase().getReference("Notification");
         dbRef.keepSynced(true);
@@ -54,7 +65,7 @@ public class NotificationService extends JobService {
                 if(mData != null)
                 {
                     if (mData.get("isOpen").equals("false")) {
-                        showNotification();
+                        showNotification(mData.get("location"), dataSnapshot.getKey());
                     }
                 }
             }
@@ -86,29 +97,48 @@ public class NotificationService extends JobService {
     @Override
     public boolean onStopJob(JobParameters params) {
         return false;
-
     }
 
-    public void showNotification(){
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
-                .setSmallIcon(R.mipmap.ic_alert)
-                .setContentTitle("Gas Leak Alert!")
+    public void showNotification(String location, String key){
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+
+        mBuilder.setSmallIcon(R.mipmap.ic_alert)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                        R.mipmap.ic_alert))
                 .setTicker("Gas Leak Alert!")
                 .setAutoCancel(true)
-//                .setStyle(new NotificationCompat.InboxStyle()
-//                        .addLine("console 1")
-//                        .addLine("console 5")
-//                        .setBigContentTitle("2 Gas Leak Alert/s")
-//                        .setSummaryText("Gas Leak!"))
-    //                .setGroup("Gas leak alert")             //newly added  05/09/17
-    //                .setGroupSummary(true)                  //newly added  05/09/17
-                .setContentText("Hello Notification!");
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000})
+                .setDefaults(DEFAULT_SOUND)
+                .setContentTitle("Gas Leak Alert!")
+                .setContentText(location)
+                .setGroup("gas_leak_alert")
+                .setGroupSummary(true);
+
+        notifList.add(location);
+        unreadNotif++;
+
+        if(unreadNotif > 1) {
+            NotificationCompat.InboxStyle notifStyle = new NotificationCompat.InboxStyle();
+            notifStyle.setBigContentTitle("Gas Leak Alert")
+                    .setSummaryText("Gas Leak");
+
+            for(int i = 0; i < notifList.size(); i++) {
+                notifStyle.addLine(notifList.get(i));
+            }
+
+            mBuilder.setStyle(notifStyle);
+        }
 
         Intent notificationIntent = new Intent(this, LogsActivity.class);
+        notificationIntent.putExtra("EXTRA_NOTIFICATION_CLICKED", true);
+        notificationIntent.putExtra("EXTRA_NOTIFICATION_KEY", key);
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(contentIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, mBuilder.build());
+        manager.notify(1, mBuilder.build());
     }
 }
