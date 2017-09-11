@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bodyBackground"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/buttonColor">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Menu"
+            android:textSize="20sp"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:gravity="left" />
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <!--para sa fragment sa navigation bar-->
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp">
+
+
+        <Button
+            android:id="@+id/accounts_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="175dp"
+            android:background="@drawable/default_button_selector"
+            android:text="Turn Off"
+            android:textColor="#fff"
+            android:textSize="28sp" />
+
+
+    </ScrollView>
+
+
+</LinearLayout>

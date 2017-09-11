@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--important area here for having catergories in the drawer-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_valve"
+            android:icon="@drawable/ic_toys_black"
+            android:title="Main Valve" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_person_outline"
+            android:title="Logut" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_portrait_black"
+            android:title="About Us" />
+
+    </group>
+
+
+
+</menu>
