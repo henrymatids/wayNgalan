@@ -10,6 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.example.henrymatidios.wayngalan.AddNewUserActivity">
 
+
     <LinearLayout
         android:id="@+id/AddNewUser_page_form"
         android:layout_width="match_parent"
