@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:text="@string/name"/>
             <TextView
                 android:id="@+id/details_profile_name"
                 android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:text="@string/account_type"/>
             <TextView
                 android:id="@+id/profile_email"
                 android:layout_width="wrap_content"

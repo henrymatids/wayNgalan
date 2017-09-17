@@ -6,6 +6,7 @@ package com.example.henrymatidios.wayngalan.models;
  */
 
 public class LogsInfo {
+    private String key;
     private String date;
     private String location;
     private String time;
@@ -50,5 +51,13 @@ public class LogsInfo {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

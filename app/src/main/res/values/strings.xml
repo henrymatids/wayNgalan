@@ -3,8 +3,6 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="promptUsername"> Username</string>
-    <string name="prompt_password"> Password</string>
     <string name="action_sign_in">LOGIN</string>
     <string name="action_notification">NOTIFICATION</string>
     <string name="action_accounts">ACCOUNT</string>
@@ -25,21 +23,39 @@
         completions."
     </string>
     <string name="test_string">NEW ACTIVITY</string>
-    <string name="title_activity_add_new_user">activity_add_new_user</string>
     <string name="loading">Processing&#8230;</string>
     <string name="alert_gas_leak">Gas Leak</string>
 
     <string name="choose_account_type">Choose Account Type</string>
+
     <string-array name="account_type">
         <item>Admin</item>
         <item>User</item>
     </string-array>
+    <string name="account_type_admin">Admin</string>
+    <string name="account_type_user">User</string>
 
     <!--ADD NEW USER STRINGS-->
     <string name="profile_picture">Profile Picture</string>
+    <string name="promptUsername"> Username</string>
+    <string name="prompt_password"> Password</string>
+    <string name="promptFirstname">Firstname</string>
+    <string name="promptLastname">Lastname</string>
+    
     <!-- MENU STRINGS-->
     <string name="menu_action">Action</string>
     <string name="menu_ignore">Ignore</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_details">Details</string>
+    
     <!--LOGS STRINGS-->
     <string name="logs_indicator">Logs</string>
+    
+    <!--CONSOLE SWITCH STRINGS-->
+    <string name="status_on">ON</string>
+    <string name="status_off">OFF</string>
+
+    <!--VIEW USER DETAILS STRINGS-->
+    <string name="account_type">Account Type :</string>
+    <string name="name">Name :</string>
 </resources>

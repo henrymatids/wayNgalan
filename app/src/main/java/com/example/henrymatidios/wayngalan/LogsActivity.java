@@ -2,25 +2,25 @@ package com.example.henrymatidios.wayngalan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.henrymatidios.wayngalan.models.Logs;
-import com.example.henrymatidios.wayngalan.models.LogsInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +29,10 @@ public class LogsActivity extends BaseActivity {
     DatabaseReference dbRef;
 
     CustomAdapter adapter;
-    List<LogsInfo> mListLogs;
+    List<Logs> mListLogs;
     ListView mListView;
-    Map<String, Logs> mLogMap;
     LinearLayout mPbLinearLayout;
-    ValueEventListener valueEventListener;
+    ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +43,16 @@ public class LogsActivity extends BaseActivity {
 
         mListView = (ListView) findViewById(R.id.logs_listView);
         mListLogs = new ArrayList<>();
-        mLogMap = new HashMap<>();
         mPbLinearLayout = (LinearLayout) findViewById(R.id.progress_bar_logs);
-        valueEventListener = null;
+        childEventListener = null;
 
         getLogs();
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showMenu(view);
+                EditText mLocation = (EditText) view.findViewById(R.id.location_editText);
+                showMenu(view, mLocation.getText().toString());
             }
         });
     }
@@ -61,12 +60,19 @@ public class LogsActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        dbRef.removeEventListener(valueEventListener);
+        dbRef.removeEventListener(childEventListener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+//        dbRef.addChildEventListener(childEventListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbRef.removeEventListener(childEventListener);
     }
 
     @Override
@@ -85,42 +91,38 @@ public class LogsActivity extends BaseActivity {
                 }
             }
         } catch(Exception e) {
-            Toast.makeText(this, "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("Error: ", e.getMessage());
         }
     }
 
     @SuppressWarnings("unchecked")
     public void getLogs() {
+        mListLogs.clear();
 
-        dbRef = Utils.getDatabase().getReference("Notification");
-        dbRef.keepSynced(true);
+        dbRef = Utils.getDatabase(false).getReference("Notification");
+
+        adapter = new CustomAdapter(LogsActivity.this, mListLogs, 0);
+        mListView.setAdapter(adapter);
 
         mPbLinearLayout.setVisibility(View.VISIBLE);
-        valueEventListener = dbRef.addValueEventListener(new ValueEventListener() {
+
+        childEventListener = dbRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                onChildAddedLogs(dataSnapshot);
+            }
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mLogMap.clear();
-                mListLogs.clear();
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
 
-                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                    Map<String, String> mLogs = (Map<String, String>) childSnapshot.getValue();
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                removeValueFromList(dataSnapshot);
+            }
 
-                    if(mLogs != null)
-                    {
-                        int image;
-                        if(mLogs.get("processed").equals("false")) {
-                            image = R.mipmap.ic_redcircle;
-                        } else {
-                            image = R.mipmap.ic_greencircle;
-                        }
-                        LogsInfo mLogsInfo = new LogsInfo(mLogs.get("date"), mLogs.get("time"), mLogs.get("location"), image);
-                        mListLogs.add(mLogsInfo);
-                    }
-                }
-                adapter = new CustomAdapter(LogsActivity.this, mListLogs, 0);
-                mListView.setAdapter(adapter);
-                mPbLinearLayout.setVisibility(View.GONE);
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
 
             @Override
@@ -128,10 +130,59 @@ public class LogsActivity extends BaseActivity {
                 Toast.makeText(LogsActivity.this, "Database Error: " +databaseError.getCode() , Toast.LENGTH_SHORT).show();
                 System.out.println("The read failed: " + databaseError.getCode());
             }
+
         });
     }
 
-    public void showMenu(View view){
+    @SuppressWarnings("unchecked")
+    public void onChildAddedLogs(DataSnapshot dataSnapshot) {
+        Map<String, String> mLogs = (Map<String, String>) dataSnapshot.getValue();
+
+        if(mLogs != null)
+        {
+            int image;
+
+            if(mLogs.get("processed").equals("false")) {
+                image = R.mipmap.ic_redcircle;
+            } else {
+                image = R.mipmap.ic_greencircle;
+            }
+
+            Logs listLogs = new Logs(dataSnapshot.getKey());
+            listLogs.values.setDate(mLogs.get("date"));
+            listLogs.values.setLocation(mLogs.get("location"));
+            listLogs.values.setTime(mLogs.get("time"));
+            listLogs.values.setImage(image);
+            mListLogs.add(listLogs);
+            ((CustomAdapter) mListView.getAdapter()).notifyDataSetChanged();
+        }
+
+        mPbLinearLayout.setVisibility(View.GONE);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void removeValueFromList(DataSnapshot dataSnapshot) {
+        Map<String, String> mLogs = (Map<String, String>) dataSnapshot.getValue();
+        String key = dataSnapshot.getKey();
+
+        if(mLogs != null) {
+            int image;
+            if(mLogs.get("processed").equals("false")) {
+                image = R.mipmap.ic_redcircle;
+            } else {
+                image = R.mipmap.ic_greencircle;
+            }
+            Logs listLogs = new Logs(dataSnapshot.getKey());
+            listLogs.values.setDate(mLogs.get("date"));
+            listLogs.values.setLocation(mLogs.get("location"));
+            listLogs.values.setTime(mLogs.get("time"));
+            listLogs.values.setImage(image);
+
+            mListLogs.remove(listLogs);
+        }
+        ((CustomAdapter)mListView.getAdapter()).notifyDataSetChanged();
+    }
+    public void showMenu(View view, final String location){
 
         PopupMenu popup = new PopupMenu(LogsActivity.this, view);
 
@@ -142,7 +193,9 @@ public class LogsActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action:
-                        Toast.makeText(getApplicationContext(), "Action Clicked", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), ConsoleSwitch.class);
+                        intent.putExtra("EXTRA_CONSOLE_NODE",location);
+                        startActivity(intent);
                         break;
                     case R.id.ignore:
                         Toast.makeText(getApplicationContext(), "Ignore Clicked", Toast.LENGTH_LONG).show();
@@ -153,6 +206,10 @@ public class LogsActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    public void markAsRead() {
+
     }
 
 }

@@ -10,52 +10,44 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.example.henrymatidios.wayngalan.LandingPage">
 
-        <LinearLayout
-            android:id="@+id/landing_page_form"
+        <Button
+            android:id="@+id/accounts_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/button_marginTop"
+            android:background="@color/buttonColor"
+            android:text="@string/action_accounts"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/font_size" />
 
-            <Button
-                android:id="@+id/accounts_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/button_marginTop"
-                android:background="@color/buttonColor"
-                android:text="@string/action_accounts"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/font_size" />
+        <!--<Button-->
+            <!--android:id="@+id/notification_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/button_marginTop"-->
+            <!--android:background="@color/buttonColor"-->
+            <!--android:text="@string/action_notification"-->
+            <!--android:textColor="@color/textColor"-->
+            <!--android:textSize="@dimen/font_size" />-->
 
-            <Button
-                android:id="@+id/notification_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/button_marginTop"
-                android:background="@color/buttonColor"
-                android:text="@string/action_notification"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/font_size" />
+        <Button
+            android:id="@+id/logs_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_marginTop"
+            android:background="@color/buttonColor"
+            android:text="@string/action_logs"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/font_size" />
 
-            <Button
-                android:id="@+id/logs_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/button_marginTop"
-                android:background="@color/buttonColor"
-                android:text="@string/action_logs"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/font_size" />
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_marginTop"
+            android:background="@color/buttonColor"
+            android:text="@string/action_logout"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/font_size" />
 
-            <Button
-                android:id="@+id/logout_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/button_marginTop"
-                android:background="@color/buttonColor"
-                android:text="@string/action_logout"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/font_size" />
-
-        </LinearLayout>
 </LinearLayout>

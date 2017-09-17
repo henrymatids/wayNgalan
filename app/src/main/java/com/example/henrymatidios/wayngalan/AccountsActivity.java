@@ -37,11 +37,4 @@ public class AccountsActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void authenticateAccount() {
-    }
-
-    public void getAccountType(){
-
-    }
 }

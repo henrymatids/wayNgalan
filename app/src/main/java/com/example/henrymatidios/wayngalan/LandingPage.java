@@ -51,13 +51,13 @@ public class LandingPage extends AppCompatActivity{
             }
         });
 
-        Button mNotificationButton = (Button) findViewById(R.id.notification_button);
-        mNotificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), NotificationActivity.class));
-            }
-        });
+//        Button mNotificationButton = (Button) findViewById(R.id.notification_button);
+//        mNotificationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(v.getContext(), NotificationActivity.class));
+//            }
+//        });
 
         Button mLogsButton = (Button) findViewById(R.id.logs_button);
         mLogsButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +111,7 @@ public class LandingPage extends AppCompatActivity{
 
         if(user != null) {
             String userID = user.getUid();
-            DatabaseReference dbRef = Utils.getDatabase().getReference("Accounts");
+            DatabaseReference dbRef = Utils.getDatabase(true).getReference("Accounts");
 
             dbRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

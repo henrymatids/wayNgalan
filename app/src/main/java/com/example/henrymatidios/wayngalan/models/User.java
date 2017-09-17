@@ -12,12 +12,15 @@ public class User {
     private String email;
     private String name;
     private String type;
+    private int image;
 
     public User() {}
 
-    public User(String email, String type) {
+    public User(String email, String type, String name, int image) {
         this.email = email;
         this.type = type;
+        this.name = name;
+        this.image = image;
     }
 
     public String getEmail() {
@@ -42,5 +45,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }

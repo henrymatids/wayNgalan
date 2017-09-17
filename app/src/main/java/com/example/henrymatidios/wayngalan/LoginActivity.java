@@ -166,9 +166,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         );
     }
 
-    private void scheduleJob(){
-
-    }
     /**
      * Changes the UI
      * @param user current user status. Has a Null value if there are no user logged in.

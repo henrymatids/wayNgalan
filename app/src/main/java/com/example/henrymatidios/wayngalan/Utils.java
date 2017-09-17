@@ -1,6 +1,9 @@
 package com.example.henrymatidios.wayngalan;
 
-import com.google.firebase.auth.FirebaseAuth;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -10,21 +13,21 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class Utils {
+
     private static FirebaseDatabase mDatabase;
     private static FirebaseUser user;
-    public static FirebaseDatabase getDatabase(){
+    public static FirebaseDatabase getDatabase(boolean offlineData){
         if(mDatabase == null){
             mDatabase = FirebaseDatabase.getInstance();
-            mDatabase.setPersistenceEnabled(true);
+            mDatabase.setPersistenceEnabled(offlineData);
         }
         return mDatabase;
     }
 
-    public static FirebaseUser getUser() {
-        if(user == null){
-            user = FirebaseAuth.getInstance().getCurrentUser();
-        }
-
-        return user;
+    public static boolean isDataConnectionAvailable(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 }

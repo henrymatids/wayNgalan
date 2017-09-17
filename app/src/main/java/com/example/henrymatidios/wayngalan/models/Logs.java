@@ -7,7 +7,7 @@ package com.example.henrymatidios.wayngalan.models;
 
 public class Logs {
     private String key;
-    public LogsInfo values;
+    public LogsInfo values = new LogsInfo();
 
     public Logs(String key) {
         this.key = key;

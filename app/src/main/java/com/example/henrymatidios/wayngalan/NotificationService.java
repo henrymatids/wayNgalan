@@ -53,7 +53,7 @@ public class NotificationService extends JobService {
         unreadNotif = 0;
         notifList.clear();
 
-        DatabaseReference dbRef = Utils.getDatabase().getReference("Notification");
+        DatabaseReference dbRef = Utils.getDatabase(true).getReference("Notification");
         dbRef.keepSynced(true);
 
         dbRef.addChildEventListener(new ChildEventListener() {

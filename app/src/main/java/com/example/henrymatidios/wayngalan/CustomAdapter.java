@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.henrymatidios.wayngalan.models.LogsInfo;
+import com.example.henrymatidios.wayngalan.models.Logs;
 import com.example.henrymatidios.wayngalan.models.User;
 
 import java.util.List;
@@ -27,6 +27,7 @@ public class CustomAdapter extends BaseAdapter {
         EditText mLocationEditText;
         EditText mDateEditText;
         EditText mTimeEditText;
+        TextView mKey;
         TextView mProfileName;
         TextView mProfileType;
     }
@@ -72,6 +73,7 @@ public class CustomAdapter extends BaseAdapter {
         EditText mDate;
         EditText mLocation;
         EditText mTime;
+        TextView mKey;
         TextView mProfileName;
         TextView mProfileType;
         TextView spinnerItem;
@@ -95,6 +97,7 @@ public class CustomAdapter extends BaseAdapter {
                 holder.mLocationEditText = (EditText) convertView.findViewById(R.id.location_editText);
                 holder.mDateEditText = (EditText) convertView.findViewById(R.id.date_editText);
                 holder.mTimeEditText = (EditText) convertView.findViewById(R.id.time_editText);
+                holder.mKey = (TextView) convertView.findViewById(R.id.logs_key);
 
                 convertView.setTag(holder);
             } else if (context instanceof ViewUsersActivity) {
@@ -121,24 +124,35 @@ public class CustomAdapter extends BaseAdapter {
             mLocation = holder.mLocationEditText;
             mDate = holder.mDateEditText;
             mTime = holder.mTimeEditText;
+            mKey = holder.mKey;
 
-            LogsInfo logs = (LogsInfo) mData.get(position);
+            Logs logs = (Logs) mData.get(position);
 
-            mImage.setImageResource(logs.getImage());
+            mImage.setImageResource(logs.values.getImage());
             mAlert.setText(context.getString(R.string.alert_gas_leak));
-            mLocation.setText(logs.getLocation());
-            mDate.setText(logs.getDate());
-            mTime.setText(logs.getTime());
+            mLocation.setText(logs.values.getLocation());
+            mDate.setText(logs.values.getDate());
+            mTime.setText(logs.values.getTime());
+            mKey.setText(logs.getKey());
+
         } else if (context instanceof ViewUsersActivity){
             mImage = holder.mImage;
             mProfileName = holder.mProfileName;
             mProfileType = holder.mProfileType;
 
             User mUser = (User) mData.get(position);
+            String accountType;
 
-            mImage.setImageResource(this.mImage);
+            mImage.setImageResource(mUser.getImage());
             mProfileName.setText(mUser.getName());
-            mProfileType.setText(mUser.getType());
+
+            if(mUser.getType().equals("0")) {
+                accountType = convertView.getResources().getString(R.string.account_type_admin);
+            } else {
+                accountType = convertView.getResources().getString(R.string.account_type_user);
+            }
+
+            mProfileType.setText(accountType);
         }
         return convertView;
     }
