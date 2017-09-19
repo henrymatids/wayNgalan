@@ -7,9 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.henrymatidios.wayngalan.models.Logs;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -182,7 +185,7 @@ public class LogsActivity extends BaseActivity {
         }
         ((CustomAdapter)mListView.getAdapter()).notifyDataSetChanged();
     }
-    public void showMenu(View view, final String location){
+    public void showMenu(final View view, final String location){
 
         PopupMenu popup = new PopupMenu(LogsActivity.this, view);
 
@@ -193,11 +196,15 @@ public class LogsActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action:
+                        showProgressDialog();
+                        markAsRead(view);
                         Intent intent = new Intent(getApplicationContext(), ConsoleSwitch.class);
                         intent.putExtra("EXTRA_CONSOLE_NODE",location);
                         startActivity(intent);
                         break;
                     case R.id.ignore:
+                        showProgressDialog();
+                        markAsRead(view);
                         Toast.makeText(getApplicationContext(), "Ignore Clicked", Toast.LENGTH_LONG).show();
                         break;
                     default:
@@ -208,8 +215,36 @@ public class LogsActivity extends BaseActivity {
         });
     }
 
-    public void markAsRead() {
+    public void markAsRead(View view) {
 
+        ImageView mImage = (ImageView) findViewById(R.id.imageView);
+        TextView mKey = (TextView) findViewById(R.id.logs_key);
+        EditText mLocation = (EditText) findViewById(R.id.location_editText);
+        EditText mDate = (EditText) findViewById(R.id.date_editText);
+        EditText mTime = (EditText) findViewById(R.id.time_editText);
+
+        mImage.setImageResource(R.mipmap.ic_greencircle);
+        String key = mKey.getText().toString();
+        String location = mLocation.getText().toString();
+        String date = mDate.getText().toString();
+        String time = mTime.getText().toString();
+
+
+        Map<String, String> mObj = new HashMap<>();
+        mObj.put("date", date);
+        mObj.put("location", location);
+        mObj.put("processed", "true");
+        mObj.put("time", time);
+
+        Map<String, Object> childUpdate = new HashMap<>();
+        childUpdate.put("/"+key+"/", mObj);
+
+        dbRef.updateChildren(childUpdate, new DatabaseReference.CompletionListener(){
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                hideProgressDialog();
+            }
+        });
     }
 
 }

@@ -44,20 +44,12 @@ public class LandingPage extends AppCompatActivity{
                     intent.putExtra("EXTRA_ACCOUNT_TYPE", accountType);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(v.getContext(), NotificationActivity.class);
+                    Intent intent = new Intent(v.getContext(), AccountDetails.class);
                     intent.putExtra("EXTRA_ACCOUNT_TYPE", accountType);
                     startActivity(intent);
                 }
             }
         });
-
-//        Button mNotificationButton = (Button) findViewById(R.id.notification_button);
-//        mNotificationButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(v.getContext(), NotificationActivity.class));
-//            }
-//        });
 
         Button mLogsButton = (Button) findViewById(R.id.logs_button);
         mLogsButton.setOnClickListener(new View.OnClickListener() {

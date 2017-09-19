@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +32,6 @@ public class NotificationService extends JobService {
     public void onCreate() {
         super.onCreate();
         notifList = new ArrayList<>();
-        Toast.makeText(this, "Service Created", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -64,7 +62,7 @@ public class NotificationService extends JobService {
 
                 if(mData != null)
                 {
-                    if (mData.get("isOpen").equals("false")) {
+                    if (mData.get("processed").equals("false")) {
                         showNotification(mData.get("location"), dataSnapshot.getKey());
                     }
                 }
@@ -121,7 +119,7 @@ public class NotificationService extends JobService {
 
         if(unreadNotif > 1) {
             NotificationCompat.InboxStyle notifStyle = new NotificationCompat.InboxStyle();
-            notifStyle.setBigContentTitle("Gas Leak Alert")
+                notifStyle.setBigContentTitle("Gas Leak Alert")
                     .setSummaryText("Gas Leak");
 
             for(int i = 0; i < notifList.size(); i++) {

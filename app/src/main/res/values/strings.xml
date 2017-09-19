@@ -41,16 +41,16 @@
     <string name="prompt_password"> Password</string>
     <string name="promptFirstname">Firstname</string>
     <string name="promptLastname">Lastname</string>
-    
+
     <!-- MENU STRINGS-->
     <string name="menu_action">Action</string>
     <string name="menu_ignore">Ignore</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_details">Details</string>
-    
+
     <!--LOGS STRINGS-->
     <string name="logs_indicator">Logs</string>
-    
+
     <!--CONSOLE SWITCH STRINGS-->
     <string name="status_on">ON</string>
     <string name="status_off">OFF</string>

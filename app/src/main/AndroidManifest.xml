@@ -71,7 +71,8 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".ConsoleSwitch"></activity>
+        <activity android:name=".ConsoleSwitch" />
+        <activity android:name=".AccountDetails"></activity>
     </application>
 
 </manifest>

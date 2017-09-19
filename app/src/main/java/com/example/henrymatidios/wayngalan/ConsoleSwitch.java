@@ -133,7 +133,7 @@ public class ConsoleSwitch extends BaseActivity {
 
             console = extras.getString(CONSOLE_NODE);
 
-            Map<String, String> inputVal = new HashMap<>();
+            final Map<String, String> inputVal = new HashMap<>();
             inputVal.clear();
             if(mSwitchStatus.equals("On")){
                 inputVal.put("status","Off");
@@ -150,6 +150,7 @@ public class ConsoleSwitch extends BaseActivity {
 
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        Toast.makeText(ConsoleSwitch.this, inputVal.get("status").toUpperCase(), Toast.LENGTH_SHORT).show();
                         hideProgressDialog();
                     }
                 });
