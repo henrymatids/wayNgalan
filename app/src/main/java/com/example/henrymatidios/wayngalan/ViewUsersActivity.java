@@ -61,8 +61,8 @@ public class ViewUsersActivity extends BaseActivity {
 
         showProgressDialog();
 
-       dbRef = Utils.getDatabase(true).getReference("Accounts");
-//        dbRef.keepSynced(true);
+        dbRef = Utils.getDatabase(true).getReference("Accounts");
+        dbRef.keepSynced(true);
 
         valueEventListener = dbRef.addValueEventListener(new ValueEventListener() {
             @Override

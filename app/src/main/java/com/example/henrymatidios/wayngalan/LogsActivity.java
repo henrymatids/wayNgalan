@@ -30,13 +30,13 @@ import java.util.Map;
 public class LogsActivity extends BaseActivity {
 
     //Firebase
-    DatabaseReference dbRef;
+    private DatabaseReference dbRef;
 
-    CustomAdapter adapter;
-    List<Logs> mListLogs;
-    ListView mListView;
-    LinearLayout mPbLinearLayout;
-    ChildEventListener childEventListener;
+    private CustomAdapter adapter;
+    private List<Logs> mListLogs;
+    private ListView mListView;
+    private LinearLayout mPbLinearLayout;
+    private ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,6 @@ public class LogsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        dbRef.addChildEventListener(childEventListener);
     }
 
     @Override
@@ -206,7 +205,6 @@ public class LogsActivity extends BaseActivity {
                     case R.id.ignore:
                         showProgressDialog();
                         markAsRead(view);
-                        Toast.makeText(getApplicationContext(), "Ignore Clicked", Toast.LENGTH_LONG).show();
                         break;
                     default:
                         break;
