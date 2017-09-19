@@ -235,6 +235,7 @@ public class AddNewUserActivity extends BaseActivity implements View.OnClickList
         CustomAdapter mConsoleSpinnerAdapter = new CustomAdapter(AddNewUserActivity.this, mConsoleNodeValues);
         mConsoleNode.setAdapter(mConsoleSpinnerAdapter);
     }
+
     /**
      * Updates the UI
      * @param user Object of the current user

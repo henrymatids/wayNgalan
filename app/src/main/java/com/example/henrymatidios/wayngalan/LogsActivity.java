@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LogsActivity extends BaseActivity {
+
     //Firebase
     DatabaseReference dbRef;
 
@@ -131,7 +132,6 @@ public class LogsActivity extends BaseActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(LogsActivity.this, "Database Error: " +databaseError.getCode() , Toast.LENGTH_SHORT).show();
-                System.out.println("The read failed: " + databaseError.getCode());
             }
 
         });
@@ -185,6 +185,7 @@ public class LogsActivity extends BaseActivity {
         }
         ((CustomAdapter)mListView.getAdapter()).notifyDataSetChanged();
     }
+
     public void showMenu(final View view, final String location){
 
         PopupMenu popup = new PopupMenu(LogsActivity.this, view);

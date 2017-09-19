@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -109,9 +110,16 @@ public class LandingPage extends AppCompatActivity{
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     HashMap<String, ?> snapshotValue = (HashMap<String, ?>) dataSnapshot.getValue();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     if(snapshotValue != null){
                         accountType = (String)snapshotValue.get("type");
+                        UserProfileChangeRequest userProfile = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(snapshotValue.get("name").toString())
+                                .build();
+                        if(user != null) {
+                            user.updateProfile(userProfile);
+                        }
                     }
                 }
 

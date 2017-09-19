@@ -23,6 +23,8 @@ public class ViewUsersActivity extends BaseActivity {
     private CustomAdapter adapter;
     private List<User> mAccountList;
     private ListView mListView;
+    private ValueEventListener valueEventListener;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +40,31 @@ public class ViewUsersActivity extends BaseActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               showMenu(view, "WEW");
+               showMenu(view, " ");
         }
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbRef.removeEventListener(valueEventListener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbRef.removeEventListener(valueEventListener);
+    }
     @SuppressWarnings("unchecked")
     public void populateAccountListView() {
 
         showProgressDialog();
 
-        DatabaseReference dbRef = Utils.getDatabase(true).getReference("Accounts");
+       dbRef = Utils.getDatabase(true).getReference("Accounts");
 //        dbRef.keepSynced(true);
 
-        dbRef.addValueEventListener(new ValueEventListener() {
+        valueEventListener = dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mAccountList.clear();
@@ -77,7 +90,7 @@ public class ViewUsersActivity extends BaseActivity {
         });
     }
 
-    public void showMenu(View view, final String location){
+    public void showMenu(View view, final String userID){
 
         PopupMenu popup = new PopupMenu(ViewUsersActivity.this, view);
 
