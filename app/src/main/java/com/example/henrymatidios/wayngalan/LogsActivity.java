@@ -216,11 +216,11 @@ public class LogsActivity extends BaseActivity {
 
     public void markAsRead(View view) {
 
-        ImageView mImage = (ImageView) findViewById(R.id.imageView);
-        TextView mKey = (TextView) findViewById(R.id.logs_key);
-        EditText mLocation = (EditText) findViewById(R.id.location_editText);
-        EditText mDate = (EditText) findViewById(R.id.date_editText);
-        EditText mTime = (EditText) findViewById(R.id.time_editText);
+        ImageView mImage = (ImageView) view.findViewById(R.id.imageView);
+        TextView mKey = (TextView) view.findViewById(R.id.logs_key);
+        EditText mLocation = (EditText) view.findViewById(R.id.location_editText);
+        EditText mDate = (EditText) view.findViewById(R.id.date_editText);
+        EditText mTime = (EditText) view.findViewById(R.id.time_editText);
 
         mImage.setImageResource(R.mipmap.ic_greencircle);
         String key = mKey.getText().toString();
